@@ -1,27 +1,77 @@
-# Продолжение JavaScript #
+# Урок 2. Основы ООП (объектно-ориентированного программирования)
 
-# Урок 2. Семинар. Работа с DOM #
+**Задание 1: "Управление библиотекой книг"**
 
-В этом задании вам предстоит выполнять различные манипуляции с элементами на
-веб-странице, используя JavaScript и Document Object Model (DOM). Ниже приводится
-список задач
+Реализуйте класс Book, который будет представлять книгу с указанными ниже
+свойствами и методами:
 
-![alt text](html.png)
+● Свойства:
 
-**Задачи:**
+○ title (название) - строка, представляющая название книги.
+○ author (автор) - строка, представляющая имя автора книги.
+○ pages (количество страниц) - число, представляющее количество
+страниц в книге.
 
-1. Ко всем элементам, имеющим класс dropdown-item, добавьте еще один класс
-super-dropdown. Используйте методы forEach и querySelectorAll, а
-также свойство classList у элементов.
-2. У элемента с классом btn необходимо убрать класс btn-secondary, если он
-присутствует у этого элемента, либо добавить, если такого класса у элемента
-не было.
-3. Необходимо удалить класс dropdown-menu у элемента, у которого
-присутствует класс menu.
-4. Используя метод insertAdjacentHTML, добавьте после div с классом
-dropdown следующую разметку: a href="#">link</a.
-5. У элемента с id="dropdownMenuButton" замените id на superDropdown.
-6. Добавьте атрибут data-dd со значением 3 элементу, у которого существует
-атрибут aria-labelledby, равный dropdownMenuButton, используя
-dataset.
-7. Удалите атрибут type у элемента с классом dropdown-toggle
+● Методы:
+○ displayInfo() - метод, который выводит информацию о книге в
+формате: Название: {title}, Автор: {author}, Страниц:
+{pages}.
+
+Пример использования класса
+
+const book1 = new Book("1984", "Джордж Оруэлл", 328);
+book1.displayInfo();
+
+// Вывод: Название: 1984, Автор: Джордж Оруэлл, Страниц: 328
+
+Эталонное решение:
+class Book {
+constructor(title, author, pages) {
+this.title = title;
+this.author = author;
+this.pages = pages;
+}
+displayInfo() {
+    console.log(`Название: ${this.title}, Автор: ${this.author},
+Страниц: ${this.pages}`);
+}
+}
+
+**Задание 2: "Управление списком студентов"**
+
+Реализуйте класс Student, который будет представлять студента с указанными ниже
+свойствами и методами:
+
+● Свойства:
+
+○ name (имя) - строка, представляющая имя студента.
+○ age (возраст) - число, представляющее возраст студента.
+○ grade (класс) - строка, представляющая класс, в котором учится студент.
+
+● Методы:
+
+○ displayInfo() - метод, который выводит информацию о студенте в
+формате: Name: {name}, Age: {age}, Grade: {grade}.
+
+Пример использования класса
+
+const student1 = new Student("John Smith", 16, "10th grade");
+student1.displayInfo();
+
+// Вывод: Name: John Smith, Age: 16, Grade: 10th grade
+const student2 = new Student("Jane Doe", 17, "11th grade");
+student2.displayInfo();
+
+// Вывод: Name: Jane Doe, Age: 17, Grade: 11th grade
+
+Эталонное решение:
+
+class Student {
+constructor(name, age, grade) {
+this.name = name;
+this.age = age;
+this.grade = grade;
+}
+displayInfo() {
+console.log(`Name: ${this.name}, Age: ${this.age}, Grade: ${this.grade}`);
+}
