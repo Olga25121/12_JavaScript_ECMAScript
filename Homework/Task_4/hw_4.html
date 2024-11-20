@@ -2,104 +2,95 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homework4</title>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DZ4</title>
 </head>
 
 <body>
-    <input id="from" type="text">
-    В инпуте написано: <span></span>
-
-    <br>
-
-    <button class="messageBtn">Показать блок</button>
-    <div class="message">
-        Привет :)
-    </div>
-
-    <br>
-
-    <form>
-        <label>
-            Первый инпут:
-            <input class="form-control" type="text">
-        </label>
-        <br>
-        <br>
-        <label>
-            Второй инпут:
-            <select class="form-control">
-                <option value=""></option>
-                <option value="1">Один</option>
-                <option value="2">Два</option>
-            </select>
-        </label>
-        <br>
-        <br>
-        <button>Отправить</button>
-    </form>
-
+    <p id="myElement">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda, atque!</p>
     <script>
-        ////document.addEventListener('DOMContentLoaded', function() {
-        "use strict";
-        // 1. При изменении значения в input с id="from", значение содержащееся в нем должно моментально отображаться в span. То есть при печати в input'е тег span также должен меняться.
-        const inputFrom = document.getElementById('from');
-        const spanElement = document.querySelector('span');
+        // ""Получение данных о пользователе""
 
-        inputFrom.addEventListener('input', function () {
-            spanElement.textContent = inputFrom.value;
-        });
+        // Реализуйте функцию getUserData, которая принимает идентификатор пользователя (ID) в качестве аргумента и использует fetch для получения данных о пользователе с заданным ID с удаленного сервера. Функция должна возвращать промис, который разрешается с данными о пользователе в виде объекта. Если пользователь с указанным ID не найден, промис должен быть отклонен с соответствующим сообщением об ошибке.
 
-        // 2. При клике на кнопку с классом messageBtn необходимо элементу с классом message:
-        //- добавить два класса: animate_animated и animate_fadeInLeftBig
-        //- поставить данному элементу стиль visibility в значение 'visible'.
-        const messageBtn = document.querySelector('.messageBtn');
-        const messageElement = document.querySelector('.message');
+        // Подсказка, с последовательностью действий:
+        // getUserData использует fetch для получения данных о пользователе с удаленного сервера. Если запрос успешен (с кодом 200), функция извлекает данные из ответа с помощью response.json() и возвращает объект с данными о пользователе. Если запрос неуспешен, функция отклоняет промис с сообщением об ошибке.
 
-        messageBtn.addEventListener('click', function () {
-            messageElement.classList.add('animate_animated', 'animate_fadeInLeftBig');
-            messageElement.style.visibility = 'visible';
-        });
+        async function getUserData(ID) {
+            fetch("https://jsonplaceholder.typicode.com/users")
+                .then((response) => response.json())
+                .then((data) => console.log(data.filter((user) => user.id === ID)))
+                .catch((error) => console.log(error.message));
+        }
+        getUserData(3);
 
-        // 3. Необходимо при отправке формы проверить, заполнены ли все поля в этой форме. Если какое-либо поле не заполнено, форма не должна отправляться, также должны //быть подсвечены незаполненные поля (необходимо поставить класс error незаполненным полям). Как только пользователь начинает заполнять какое-либо поле, необходимо, //при вводе в данное поле, произвести проверку:
-        //- Если поле пустое, необходимо данное поле подсветить (поставить класс error данному полю).
-        //- Если поле было чем-либо заполнено, подсветку (класс error) необходимо убрать.
-        const form = document.querySelector('form');
-        const formInputs = form.querySelectorAll('.form-control');
+        // ""Отправка данных на сервер""
 
-        form.addEventListener('submit', function (event) {
-            let formIsValid = true;
+        // Реализуйте функцию saveUserData, которая принимает объект с данными о пользователе в качестве аргумента и использует fetch для отправки этих данных на удаленный сервер для сохранения. Функция должна возвращать промис, который разрешается, если данные успешно отправлены, или отклоняется в случае ошибки.
 
-            formInputs.forEach(function (input) {
-                isValid(input);
+        // *Подсказка *
+        // // Пример использования функции
+        // const user = {
+        // name: 'John Smith',
+        // age: 30,
+        // email: 'john@example.com'
+        // };
 
-                if (input.classList.contains('error')) {
-                    formIsValid = false;
+        // saveUserData(user)
+        // .then(() => {
+        // console.log('User data saved successfully');
+        // })
+        // .catch(error => {
+        // console.log(error.message);
+        // });
+
+        // saveUserData использует fetch для отправки данных о пользователе на удаленный сервер для сохранения. Она отправляет POST-запрос на URL-адрес /users с указанием типа содержимого application/json и сериализует объект с данными о пользователе в JSON-строку с помощью JSON.stringify(). Если запрос успешен (с кодом 200), функция разрешает промис. Если запрос неуспешен, функция отклоняет промис с сообщени
+
+        const user = {
+            name: "John Smith",
+            age: 30,
+            email: "john@example.com",
+        };
+
+        async function saveUserData(user) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "https://httpbin.org/post");
+            xhr.send(JSON.stringify(user, null, 4));
+            xhr.onload = function () {
+                if (xhr.status != 200) {
+                    console.log(`Error ${xhr.status}: ${xhr.statusText}`);
+                } else {
+                    console.log(`user: ${xhr.response}`);
                 }
-            });
-
-            if (!formIsValid) {
-                event.preventDefault();
-            }
-        });
-
-        formInputs.forEach(function (input) {
-            input.addEventListener('input', function () {
-                isValid(input);
-            });
-        });
-
-        function isValid(elem) {
-            if (elem.value === '') {
-                elem.classList.add('error');
-            } else {
-                elem.classList.remove('error');
-            }
+            };
+            xhr.onerror = function () {
+                console.log("Request error");
+            };
         }
 
+        saveUserData(user)
+            .then(() => {
+                console.log("User data saved successfully");
+            })
+            .catch((error) => {
+                console.log(error.message);
+            });
 
+        // ""Изменение стиля элемента через заданное время""
+
+        // Напишите функцию changeStyleDelayed, которая принимает идентификатор элемента и время задержки (в миллисекундах) в качестве аргументов. Функция должна изменить стиль элемента через указанное время.
+
+        // // Пример использования функции
+        // changeStyleDelayed('myElement', 2000); // Через 2 секунды изменяет стиль элемента с id 'myElement'"
+
+        function changeStyleDelayed(el, time) {
+            setTimeout(function () {
+                document.getElementById(el).style.color = "blue";
+            }, time);
+        }
+
+        changeStyleDelayed("myElement", 2000);
     </script>
 </body>
 
